@@ -1,7 +1,7 @@
-.. image:: https://travis-ci.org/python-control/python-control.svg?branch=master
-   :target: https://travis-ci.org/python-control/python-control
-.. image:: https://coveralls.io/repos/python-control/python-control/badge.png
-   :target: https://coveralls.io/r/python-control/python-control
+.. image:: https://travis-ci.org/LucasRMehl/python-control.svg?branch=covslayer
+   :target: https://travis-ci.org/LucasRMehl/python-control
+.. image:: https://coveralls.io/repos/LucasRMehl/python-control/badge.png
+   :target: https://coveralls.io/r/LucasRMehl/python-control
 
 Python Control Systems Library
 ==============================
