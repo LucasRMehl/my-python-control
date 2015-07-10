@@ -1,7 +1,7 @@
-.. image:: https://travis-ci.org/LucasRMehl/python-control.svg?branch=covslayer
-   :target: https://travis-ci.org/LucasRMehl/python-control
-.. image:: https://coveralls.io/repos/LucasRMehl/python-control/badge.png
-   :target: https://coveralls.io/r/LucasRMehl/python-control
+.. image:: https://travis-ci.org/LucasRMehl/my-python-control.svg?branch=covslayer
+   :target: https://travis-ci.org/LucasRMehl/my-python-control
+.. image:: https://coveralls.io/repos/LucasRMehl/my-python-control/badge.png
+   :target: https://coveralls.io/r/LucasRMehl/my-python-control
 
 Python Control Systems Library
 ==============================
