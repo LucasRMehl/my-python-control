@@ -22,12 +22,17 @@ before_install:
   - conda install --yes python=$TRAVIS_PYTHON_VERSION conda-build pip coverage
   - conda config --add channels http://conda.binstar.org/cwrowley
   - conda info -a
+  # Grab my own slycot repo
+  - git clone https://github.com/LucasRMehl/Slycot.git
+  - python Slycot/setup.py config_fc --arch="-march=x86-64" build
+  - python Slycot/setup.py install
+  - pip install -e Slycot
 
 # Install packages
 install:
   - conda build conda-recipe
   - conda install control --use-local
-  - conda install slycot
+  #- conda install slycot
   - pip install coveralls
 
 # command to run tests
