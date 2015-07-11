@@ -163,7 +163,7 @@ def lyap(A,Q,C=None,E=None):
                 e.info = ve.info
             elif ve.info > m:
                 e = ValueError("A singular matrix was encountered whilst \
-                    solving for the %i-th column of matrix X." % ve.info-m)
+                    solving for the %i-th column of matrix X." % (ve.info-m))
                 e.info = ve.info
             else:
                 e = ValueError("The QR algorithm failed to compute all the \
@@ -346,7 +346,7 @@ def dlyap(A,Q,C=None,E=None):
                 e.info = ve.info
             elif ve.info > m:
                 e = ValueError("A singular matrix was encountered whilst \
-                    solving for the %i-th column of matrix X." % ve.info-m)
+                    solving for the %i-th column of matrix X." % (ve.info-m))
                 e.info = ve.info
             else:
                 e = ValueError("The QR algorithm failed to compute all the \

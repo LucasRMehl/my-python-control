@@ -68,6 +68,13 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * A.T + Q, zeros((2,2)))
 
+        # 1x1 Lyapunov
+        A = matrix([1])
+        Q = matrix([0])
+        X = lyap(A,Q)
+        # print("The solution obtained is ", X)
+        assert_array_almost_equal(A * X + X * A.T + Q, zeros((1,1)))
+
     def test_lyap_sylvester(self):
         A = 5
         B = matrix([[4, 3], [4, 3]])
@@ -83,6 +90,14 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * B + C, zeros((2,2)))
 
+        # 1x1 Sylvester
+        A = matrix([1])
+        Q = matrix([1])
+        C = matrix([0])
+        X = lyap(A,Q,C)
+        # print("The solution obtained is ", X)
+        assert_array_almost_equal(A * X + X * Q + C, zeros((1,1)))
+
     def test_lyap_g(self):
         A = matrix([[-1, 2],[-3, -4]])
         Q = matrix([[3, 1],[1, 1]])
@@ -90,6 +105,14 @@ class TestMatrixEquations(unittest.TestCase):
         X = lyap(A,Q,None,E)
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * E.T + E * X * A.T + Q, zeros((2,2)))
+
+        # 1x1 Generalized Lyapunov
+        A = matrix([1])
+        Q = matrix([0])
+        E = matrix([1])
+        X = lyap(A,Q,None,E)
+        # print("The solution obtained is ", X)
+        assert_array_almost_equal(A * X * E.T + E * X * A.T + Q, zeros((1,1)))
 
     def test_dlyap(self):
         A = matrix([[-0.6, 0],[-0.1, -0.4]])
@@ -112,6 +135,13 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * A.T - E * X * E.T + Q, zeros((2,2)))
 
+        # 1x1 Generalized Discrete Lyapunov w/ValueError
+        A = matrix([0])
+        Q = matrix([0])
+        E = matrix([0])
+        with self.assertRaises(ValueError):
+            X = dlyap(A,Q,None,E)
+
     def test_dlyap_sylvester(self):
         A = 5
         B = matrix([[4, 3], [4, 3]])
@@ -127,6 +157,13 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * B.T - X + C, zeros((2,2)))
 
+        # 1x1 Sylvester
+        A = matrix([1])
+        Q = matrix([1])
+        C = matrix([0])
+        with self.assertRaises(ValueError):
+            X = dlyap(A,Q,C)
+
     def test_care(self):
         A = matrix([[-2, -1],[-1, -1]])
         Q = matrix([[0, 0],[0, 1]])
@@ -137,6 +174,14 @@ class TestMatrixEquations(unittest.TestCase):
         assert_array_almost_equal(A.T * X + X * A - X * B * B.T * X + Q,
                                   zeros((2,2)))
         assert_array_almost_equal(B.T * X, G)
+
+        # 1x1 Continuous Algebraic Riccati Equation w/ValueError
+        A = matrix([0])
+        Q = matrix([0])
+        B = matrix([0])
+        with self.assertRaises(ValueError):
+            X,L,G = care(A,B,Q)
+
 
     def test_care_g(self):
         A = matrix([[-2, -1],[-1, -1]])
@@ -166,6 +211,15 @@ class TestMatrixEquations(unittest.TestCase):
             A.T * X * E + E.T * X * A -
             (E.T * X * B + S) / R * (B.T * X * E + S.T) + Q , zeros((2,2)))
         assert_array_almost_equal(dot( 1/R , dot(B.T,dot(X,E)) + S.T) , G)
+
+        A = matrix([0])
+        Q = matrix([0])
+        B = matrix([0])
+        R = 1
+        S = matrix([0])
+        E = matrix([0])
+        with self.assertRaises(ValueError):
+            X,L,G = care(A,B,Q,R,S,E)
 
     def test_dare(self):
         A = matrix([[-0.6, 0],[-0.1, -0.4]])
@@ -234,6 +288,16 @@ class TestMatrixEquations(unittest.TestCase):
         # check for stable closed loop
         lam = eigvals(A - B * G, E)
         assert_array_less(abs(lam), 1.0)
+
+        # Generalized Discrete Algebraic Riccati Equation w/ValueError
+        A = matrix([0])
+        Q = matrix([0])
+        B = matrix([0])
+        R = 1
+        S = matrix([0])
+        E = matrix([0])
+        with self.assertRaises(ValueError):
+            X,L,G = dare(A,B,Q,R,S,E)
 
 def suite():
     return unittest.TestLoader().loadTestsFromTestCase(TestMatrixEquations)
