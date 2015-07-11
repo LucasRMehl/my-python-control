@@ -43,7 +43,7 @@ Author: Bjorn Olofsson
 """
 
 import unittest
-from numpy import matrix
+from numpy import matrix, array
 from numpy.testing import assert_array_almost_equal, assert_array_less
 # need scipy version of eigvals for generalized eigenvalue problem
 from scipy.linalg import inv, eigvals
@@ -68,9 +68,9 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * A.T + Q, zeros((2,2)))
 
-        # 1x1 Lyapunov
-        A = matrix([1])
-        Q = matrix([0])
+        # 1d Lyapunov
+        A = array([1])
+        Q = array([0])
         X = lyap(A,Q)
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * A.T + Q, zeros((1,1)))
@@ -90,10 +90,10 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * B + C, zeros((2,2)))
 
-        # 1x1 Sylvester
-        A = matrix([1])
-        Q = matrix([1])
-        C = matrix([0])
+        # 1d Sylvester
+        A = array([1])
+        Q = array([1])
+        C = array([0])
         X = lyap(A,Q,C)
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X + X * Q + C, zeros((1,1)))
@@ -106,10 +106,10 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * E.T + E * X * A.T + Q, zeros((2,2)))
 
-        # 1x1 Generalized Lyapunov
-        A = matrix([1])
-        Q = matrix([0])
-        E = matrix([1])
+        # 1d Generalized Lyapunov
+        A = array([1])
+        Q = array([0])
+        E = array([1])
         X = lyap(A,Q,None,E)
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * E.T + E * X * A.T + Q, zeros((1,1)))
@@ -136,9 +136,9 @@ class TestMatrixEquations(unittest.TestCase):
         assert_array_almost_equal(A * X * A.T - E * X * E.T + Q, zeros((2,2)))
 
         # 1x1 Generalized Discrete Lyapunov w/ValueError
-        A = matrix([0])
-        Q = matrix([0])
-        E = matrix([0])
+        A = array([0])
+        Q = array([0])
+        E = array([0])
         with self.assertRaises(ValueError):
             X = dlyap(A,Q,None,E)
 
@@ -157,10 +157,10 @@ class TestMatrixEquations(unittest.TestCase):
         # print("The solution obtained is ", X)
         assert_array_almost_equal(A * X * B.T - X + C, zeros((2,2)))
 
-        # 1x1 Sylvester
-        A = matrix([1])
-        Q = matrix([1])
-        C = matrix([0])
+        # 1d Sylvester
+        A = array([1])
+        Q = array([1])
+        C = array([0])
         with self.assertRaises(ValueError):
             X = dlyap(A,Q,C)
 
@@ -175,10 +175,10 @@ class TestMatrixEquations(unittest.TestCase):
                                   zeros((2,2)))
         assert_array_almost_equal(B.T * X, G)
 
-        # 1x1 Continuous Algebraic Riccati Equation w/ValueError
-        A = matrix([0])
-        Q = matrix([0])
-        B = matrix([0])
+        # 1d Continuous Algebraic Riccati Equation w/ValueError
+        A = array([0])
+        Q = array([0])
+        B = array([0])
         with self.assertRaises(ValueError):
             X,L,G = care(A,B,Q)
 
@@ -212,12 +212,13 @@ class TestMatrixEquations(unittest.TestCase):
             (E.T * X * B + S) / R * (B.T * X * E + S.T) + Q , zeros((2,2)))
         assert_array_almost_equal(dot( 1/R , dot(B.T,dot(X,E)) + S.T) , G)
 
-        A = matrix([0])
-        Q = matrix([0])
-        B = matrix([0])
+        # 1d Generalized Continuous Algebraic Riccati Equation w/ValueError
+        A = array([0])
+        Q = array([0])
+        B = array([0])
         R = 1
-        S = matrix([0])
-        E = matrix([0])
+        S = array([0])
+        E = array([0])
         with self.assertRaises(ValueError):
             X,L,G = care(A,B,Q,R,S,E)
 
@@ -290,12 +291,12 @@ class TestMatrixEquations(unittest.TestCase):
         assert_array_less(abs(lam), 1.0)
 
         # Generalized Discrete Algebraic Riccati Equation w/ValueError
-        A = matrix([0])
-        Q = matrix([0])
-        B = matrix([0])
+        A = array([0])
+        Q = array([0])
+        B = array([0])
         R = 1
-        S = matrix([0])
-        E = matrix([0])
+        S = array([0])
+        E = array([0])
         with self.assertRaises(ValueError):
             X,L,G = dare(A,B,Q,R,S,E)
 
