@@ -24,7 +24,7 @@ before_install:
   - conda config --add channels http://conda.binstar.org/cwrowley
   - conda info -a
   # Install fortran compiler for slycot
-  - sudo apt-get install gfortran g77
+  - sudo apt-get install gfortran
 
 # Install packages
 install:
